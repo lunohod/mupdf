@@ -70,25 +70,25 @@ fz_boundnode(fz_node *node, fz_matrix ctm)
 	switch (node->kind)
 	{
 	case FZ_NTRANSFORM:
-		return fz_boundtransformnode((fz_transformnode *) node, ctm);
+		return node->bbox = fz_boundtransformnode((fz_transformnode *) node, ctm);
 	case FZ_NOVER:
-		return fz_boundovernode((fz_overnode *) node, ctm);
+		return node->bbox = fz_boundovernode((fz_overnode *) node, ctm);
 	case FZ_NMASK:
-		return fz_boundmasknode((fz_masknode *) node, ctm);
+		return node->bbox = fz_boundmasknode((fz_masknode *) node, ctm);
 	case FZ_NBLEND:
-		return fz_boundblendnode((fz_blendnode *) node, ctm);
+		return node->bbox = fz_boundblendnode((fz_blendnode *) node, ctm);
 	case FZ_NCOLOR:
-		return fz_boundsolidnode((fz_solidnode *) node, ctm);
+		return node->bbox = fz_boundsolidnode((fz_solidnode *) node, ctm);
 	case FZ_NPATH:
-		return fz_boundpathnode((fz_pathnode *) node, ctm);
+		return node->bbox = fz_boundpathnode((fz_pathnode *) node, ctm);
 	case FZ_NTEXT:
-		return fz_boundtextnode((fz_textnode *) node, ctm);
+		return node->bbox = fz_boundtextnode((fz_textnode *) node, ctm);
 	case FZ_NIMAGE:
-		return fz_boundimagenode((fz_imagenode *) node, ctm);
+		return node->bbox = fz_boundimagenode((fz_imagenode *) node, ctm);
 	case FZ_NSHADE:
-		return fz_boundshadenode((fz_shadenode *) node, ctm);
+		return node->bbox = fz_boundshadenode((fz_shadenode *) node, ctm);
 	case FZ_NLINK:
-		return fz_boundlinknode((fz_linknode *) node, ctm);
+		return node->bbox = fz_boundlinknode((fz_linknode *) node, ctm);
 	}
 	return fz_emptyrect;
 }

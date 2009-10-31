@@ -89,6 +89,7 @@ typedef enum fz_blendkind_e
 struct fz_node_s
 {
 	fz_nodekind kind;
+	fz_rect bbox;
 	fz_node *parent;
 	fz_node *first;
 	fz_node *last;
