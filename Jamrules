@@ -51,12 +51,10 @@ if $(OS) = LINUX
 {
     Echo Building for LINUX ;
 
-    BUILD_X11APP = true ;
+    BUILD_X11APP = false ;
 
-    CCFLAGS = -Wall -std=gnu99 -I/usr/include/freetype2 ;
-    LINKFLAGS = -L/usr/X11R6/lib ;
-    LINKLIBS = -lfreetype -ljpeg -lz -lm ;
-    APPLINKLIBS = -lX11 -lXext -lpthread ;
+    CCFLAGS = -Wall -std=gnu99 `pkg-config --cflags freetype2` ;
+    LINKLIBS = `pkg-config --libs freetype2` -ljpeg -lz -lm ;
 
     if $(BUILD) = debug   { OPTIM = -g -O0 -fno-inline ; }
     if $(BUILD) = release { OPTIM = -O3 ; }

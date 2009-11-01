@@ -4,10 +4,9 @@
 
 SubDir TOP mupdf ;
 
-Main fontdump : fontdump.c ;
+File fontdump : <mupdf>fontdump ;
 
-Main cmapdump : cmapdump.c ;
-LinkLibraries cmapdump : libfitz ;
+File cmapdump : <mupdf>cmapdump ;
 
 Library libmupdf :
 

@@ -10,10 +10,10 @@ SubDir TOP ;
 
 HDRS += [ FDirName $(TOP) fitz ] ;
 HDRS += [ FDirName $(TOP) mupdf ] ;
-HDRS += [ FDirName $(TOP) apps ] ;
+#HDRS += [ FDirName $(TOP) apps ] ;
 
 SubInclude TOP fitz ;
 SubInclude TOP fitzdraw ;
 SubInclude TOP mupdf ;
-SubInclude TOP apps ;
+#SubInclude TOP apps ;
 
