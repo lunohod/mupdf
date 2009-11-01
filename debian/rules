@@ -1,0 +1,59 @@
+#!/usr/bin/make -f
+
+DEB_HOST_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+
+export CFLAGS= -g -fvisibility=hidden -Wall
+export CC=$(DEB_HOST_GNU_TYPE)-gcc
+export AR=$(DEB_HOST_GNU_TYPE)-ar rsu
+export RANLIB=$(DEB_HOST_GNU_TYPE)-ranlib
+export LINK=$(CC)
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+	echo host $(DEB_HOST_GNU_TYPE)
+	echo build $(DEB_BUILD_GNU_TYPE)
+	jam '-sDEFINES=NOCJK' '-sBUILD=release' '-sOSPLAT=target'
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_clean
+	jam clean
+	rm -rf $(CURDIR)/build
+	rm -f cmapdump fontdump
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+
+	mkdir -p $(CURDIR)/debian/libmupdf-dev/usr/lib
+	install -m 0644 $(CURDIR)/build/linux-target-release/*.a $(CURDIR)/debian/libmupdf-dev/usr/lib
+
+	mkdir -p $(CURDIR)/debian/libmupdf-dev/usr/include
+	install -m 0644 $(CURDIR)/mupdf/mupdf.h $(CURDIR)/debian/libmupdf-dev/usr/include
+	install -m 0644 $(CURDIR)/fitz/fitz.h $(CURDIR)/debian/libmupdf-dev/usr/include
+	install -m 0644 $(CURDIR)/fitz/fitz_{base,stream,tree,draw}.h $(CURDIR)/debian/libmupdf-dev/usr/include
+
+	mkdir -p $(CURDIR)/debian/libmupdf-dev/usr/lib/pkgconfig
+	install -m 0644 $(CURDIR)/debian/mupdf.pc $(CURDIR)/debian/libmupdf-dev/usr/lib/pkgconfig
+
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_compress
+	dh_fixperms
+	dh_strip
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_builddeb
+
+binary-indep: build install
+
+binary: binary-arch binary-indep
+
+.PHONY: clean install build binary binary-arch binary-indep
