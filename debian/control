@@ -1,8 +1,8 @@
 Source: mupdf
 Section: core
 Maintainer: Alexander Kerner <lunohod@openinkpot.org>
-Build-Depends: debhelper (>= 7), autoconf, automake, libfreetype6-dev, zlib1g-dev | libz-dev | libz1-dev, libjpeg62-dev, pkg-config, mupdf-fontdump, libjasper-dev, libjbig2dec-dev
-XCS-Cross-Host-Build-Depends: debhelper (>= 7), autoconf, automake, pkg-config, mupdf-fontdump
+Build-Depends: debhelper (>= 7), autoconf, automake, libtool, libfreetype6-dev, zlib1g-dev | libz-dev | libz1-dev, libjpeg62-dev, pkg-config, mupdf-fontdump, libjasper-dev, libjbig2dec-dev
+XCS-Cross-Host-Build-Depends: debhelper (>= 7), autoconf, automake, libtool, pkg-config, mupdf-fontdump
 XCS-Cross-Build-Depends: libfreetype6-dev, zlib1g-dev | libz-dev | libz1-dev, libjpeg62-dev, libjasper-dev, libjbig2dec-dev
 Priority: optional
 Standards-Version: 3.8.0
