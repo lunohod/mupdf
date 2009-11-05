@@ -22,7 +22,7 @@ libmupdf_la_LIBADD =	\
 	@JPEG_LIBS@ \
 	@Z_LIBS@ \
 	-lm
-	
+
 libmupdf_la_LDFLAGS = -no-undefined -version-info 1:0:0 -Wl,--as-needed
 libmupdf_la_SOURCES =	\
 	pdf_crypt.c	\
@@ -66,5 +66,3 @@ libmupdf_la_SOURCES =	\
 	pdf_page.c	\
 	pdf_pagetree.c	\
 	pdf_store.c
-
-

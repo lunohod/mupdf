@@ -29,4 +29,3 @@ font_sans.c: NimbusSanL-Bold.cff NimbusSanL-BoldItal.cff NimbusSanL-Regu.cff Nim
 
 font_cjk.c: droid/DroidSansFallback.ttf
 	fontdump $@ $+
-	
