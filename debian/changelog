@@ -1,3 +1,10 @@
+mupdf (0.4-20091101-3) asimov; urgency=low
+
+  * Fix packaging
+  * Revert Jam patches
+
+ -- Alexander Kerner <lunohod@openinkpot.org>  Thu, 05 Nov 2009 18:31:59 +0100
+
 mupdf (0.4-20091101-2) asimov; urgency=low
 
   * Autotoolization
