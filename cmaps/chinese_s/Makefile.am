@@ -1,0 +1,5 @@
+all: cmap_chinese_s.c
+
+cmap_chinese_s.c: Adobe-GB1-4 Adobe-GB1-UCS2 GB-EUC-H GB-EUC-V GBK-EUC-H GBK-EUC-UCS2 GBK-EUC-V GBK2K-H GBK2K-V GBKp-EUC-H GBKp-EUC-V GBT-EUC-H GBT-EUC-V GBpc-EUC-H GBpc-EUC-UCS2 GBpc-EUC-UCS2C GBpc-EUC-V UniGB-UCS2-H UniGB-UCS2-V
+	cmapdump $@ $+
+

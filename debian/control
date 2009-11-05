@@ -1,14 +1,35 @@
 Source: mupdf
-Section: libdevel
+Section: core
 Maintainer: Alexander Kerner <lunohod@openinkpot.org>
-Build-Depends: debhelper, jam | ftjam, libfreetype6-dev, zlib1g-dev | libz-dev | libz1-dev, libjpeg62-dev, pkg-config, mupdf-fontdump
-XCS-Cross-Host-Build-Depends: debhelper, jam | ftjam, pkg-config, mupdf-fontdump
-XCS-Cross-Build-Depends: libfreetype6-dev, zlib1g-dev | libz-dev | libz1-dev, libjpeg62-dev
+Build-Depends: debhelper (>= 7), autoconf, automake, libfreetype6-dev, zlib1g-dev | libz-dev | libz1-dev, libjpeg62-dev, pkg-config, mupdf-fontdump, libjasper-dev, libjbig2dec-dev
+XCS-Cross-Host-Build-Depends: debhelper (>= 7), autoconf, automake, pkg-config, mupdf-fontdump
+XCS-Cross-Build-Depends: libfreetype6-dev, zlib1g-dev | libz-dev | libz1-dev, libjpeg62-dev, libjasper-dev, libjbig2dec-dev
 Priority: optional
 Standards-Version: 3.8.0
 
-Package: libmupdf-dev
+Package: libmupdf
+Priority: optional
 Architecture: any
 Depends: ${shlibs:Depends}
-Description: MuPDF static library
+Description: MuPDF library
  MuPDF is a lightweight PDF viewer and toolkit written in portable C.
+ .
+ This package contains shared library.
+
+Package: libmupdf-dev
+Priority: optional
+Architecture: any
+Depends: libmupdf (= ${binary:Version}), ${shlibs:Depends}
+Description: MuPDF library -- development
+ MuPDF is a lightweight PDF viewer and toolkit written in portable C.
+ .
+ This package contains header files and symlinks necessary to link with library.
+
+Package: libmupdf-dbg
+Priority: extra
+Architecture: any
+Depends: libmupdf (= ${binary:Version})
+Description: MuPDF library -- debugging symbols
+ MuPDF is a lightweight PDF viewer and toolkit written in portable C.
+ .
+ This package contains debugging symbols for shared library.

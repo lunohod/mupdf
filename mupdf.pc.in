@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: mupdf
+Description: PDF rendering library.
+Version: @PACKAGE_VERSION@
+Libs: -L${libdir} -lmupdf
+Cflags: -I${includedir}
