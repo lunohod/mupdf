@@ -1,3 +1,9 @@
+mupdf (0.4-20091101-2) asimov; urgency=low
+
+  * Autotoolization
+
+ -- Alexander Kerner <lunohod@openinkpot.org>  Thu, 05 Nov 2009 02:23:34 +0100
+
 mupdf (0.4-20091101-1) asimov; urgency=low
 
   * First IPLinux build
