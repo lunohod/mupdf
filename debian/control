@@ -7,7 +7,7 @@ XCS-Cross-Build-Depends: libfreetype6-dev, zlib1g-dev | libz-dev | libz1-dev, li
 Priority: optional
 Standards-Version: 3.8.0
 
-Package: libmupdf
+Package: libmupdf1
 Priority: optional
 Architecture: any
 Depends: ${shlibs:Depends}
@@ -25,7 +25,7 @@ Description: MuPDF library -- development
  .
  This package contains header files and symlinks necessary to link with library.
 
-Package: libmupdf-dbg
+Package: libmupdf1-dbg
 Priority: extra
 Architecture: any
 Depends: libmupdf (= ${binary:Version})
