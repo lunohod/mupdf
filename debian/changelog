@@ -1,3 +1,9 @@
+mupdf (0.4-20091101-5) asimov; urgency=low
+
+  * Add suffix to package names
+
+ -- Alexander Kerner <lunohod@openinkpot.org>  Mon, 09 Nov 2009 17:16:22 +0100
+
 mupdf (0.4-20091101-4) asimov; urgency=low
 
   * Disable caching images
