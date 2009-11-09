@@ -1,3 +1,9 @@
+mupdf (0.4-20091101-6) asimov; urgency=low
+
+  * Fix package dependencies
+
+ -- Alexander Kerner <lunohod@openinkpot.org>  Mon, 09 Nov 2009 17:44:42 +0100
+
 mupdf (0.4-20091101-5) asimov; urgency=low
 
   * Add suffix to package names
