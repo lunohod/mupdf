@@ -19,7 +19,7 @@ Description: MuPDF library
 Package: libmupdf-dev
 Priority: optional
 Architecture: any
-Depends: libmupdf (= ${binary:Version}), ${shlibs:Depends}
+Depends: libmupdf1 (= ${binary:Version}), ${shlibs:Depends}
 Description: MuPDF library -- development
  MuPDF is a lightweight PDF viewer and toolkit written in portable C.
  .
@@ -28,7 +28,7 @@ Description: MuPDF library -- development
 Package: libmupdf1-dbg
 Priority: extra
 Architecture: any
-Depends: libmupdf (= ${binary:Version})
+Depends: libmupdf1 (= ${binary:Version})
 Description: MuPDF library -- debugging symbols
  MuPDF is a lightweight PDF viewer and toolkit written in portable C.
  .
