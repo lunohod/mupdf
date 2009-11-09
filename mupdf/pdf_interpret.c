@@ -1002,12 +1002,17 @@ Lsetcolor:
 					return fz_rethrow(error, "cannot load image");
 
 				error = pdf_showimage(csi, img);
-				if (error)
+				if (error) {
+					fz_dropimage((fz_image*)img);
 					return fz_rethrow(error, "cannot draw image");
+				}
 			}
 
 			if (!img && !xobj)
 				return fz_throw("cannot load image or xobject");
+
+			if(img)
+				fz_dropimage((fz_image*)img);
 		}
 
 		else if (!strcmp(buf, "sh"))
