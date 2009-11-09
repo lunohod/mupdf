@@ -1,3 +1,10 @@
+mupdf (0.4-20091101-4) asimov; urgency=low
+
+  * Disable caching images
+  * Fix memleak in runkeyword
+
+ -- Alexander Kerner <lunohod@openinkpot.org>  Mon, 09 Nov 2009 02:02:43 +0100
+
 mupdf (0.4-20091101-3) asimov; urgency=low
 
   * Fix packaging
