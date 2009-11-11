@@ -203,6 +203,8 @@ retry:
 					if (fitsinside(color, bbox))
 					{
 						fz_removenode(current);
+						fz_droppathnode((fz_pathnode*)shape);
+						fz_free(shape);
 						if (prev)
 							fz_insertnodeafter(prev, color);
 						else

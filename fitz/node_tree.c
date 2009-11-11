@@ -87,6 +87,7 @@ fz_removenode(fz_node *child)
 		parent->first = child->next;
 		if (parent->last == child)
 			parent->last = nil;
+		fz_free(child);
 		return;
 	}
 
@@ -104,5 +105,6 @@ fz_removenode(fz_node *child)
 	}
 
 	parent->last = prev;
+	fz_free(child);
 }
 
