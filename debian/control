@@ -11,6 +11,8 @@ Package: libmupdf1
 Priority: optional
 Architecture: any
 Depends: ${shlibs:Depends}
+Conflicts: libmupdf
+Replaces: libmupdf
 Description: MuPDF library
  MuPDF is a lightweight PDF viewer and toolkit written in portable C.
  .
