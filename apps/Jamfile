@@ -16,33 +16,58 @@ LinkLibraries pdfclean : libpdftool $(FITZLIBS) ;
 Main pdfdraw : pdfdraw.c ;
 LinkLibraries pdfdraw : libpdftool $(FITZLIBS) ;
 
-Main pdfinfo : pdfinfo.c ;
-LinkLibraries pdfinfo : libpdftool $(FITZLIBS) ;
+# Main pdfinfo : pdfinfo.c ;
+# LinkLibraries pdfinfo : libpdftool $(FITZLIBS) ;
 
+v v v v v v v
+# Main pdfextract : pdfextract.c ;
+# LinkLibraries pdfextract : libpdftool $(FITZLIBS) ;
+
+SubDir TOP apps common ;
+Library libpdftool : pdftool.c ;
+
+# SubDir TOP apps common ;
+# Library libpdfapp : pdfapp.c ;
+
+*************
 Main pdfextract : pdfextract.c ;
 LinkLibraries pdfextract : libpdftool $(FITZLIBS) ;
 
+^ ^ ^ ^ ^ ^ ^
 if $(BUILD_WINAPP)
 {
+v v v v v v v
+	SubDir TOP apps windows ;
+	Main mupdf : winmain.c winres.rc ;
+	LinkLibraries mupdf : libpdfapp $(FITZLIBS) ;
+	LINKLIBS on mupdf$(SUFEXE) = $(LINKLIBS) $(APPLINKLIBS) ;
+*************
     Main mupdf : win_main.c win_res.rc ;
     LinkLibraries mupdf : libpdfapp $(FITZLIBS) ;
     LINKLIBS on mupdf$(SUFEXE) = $(LINKLIBS) $(APPLINKLIBS) ;
+^ ^ ^ ^ ^ ^ ^
 }
 
 if $(BUILD_X11APP)
 {
+v v v v v v v
     Main mupdf : x11_main.c x11_image.c ;
     LinkLibraries mupdf : libpdfapp $(FITZLIBS) ;
     LINKLIBS on mupdf$(SUFEXE) = $(LINKLIBS) $(APPLINKLIBS) ;
+*************
+#	 SubDir TOP apps unix ;
+#	 Main mupdf : x11pdf.c ximage.c ;
+#	 LinkLibraries mupdf : libpdfapp $(FITZLIBS) ;
+#	 LINKLIBS on mupdf$(SUFEXE) = $(LINKLIBS) $(APPLINKLIBS) ;
+^ ^ ^ ^ ^ ^ ^
 }
 
 if $(BUILD_PLUGIN)
 {
-    SubDir TOP apps mozilla ;
-    SUFEXE on npmupdf.dll = ;
-    LINKFLAGS on npmupdf.dll = $(LINKFLAGS) -shared -Wl,--kill-at ;
-    LINKLIBS on npmupdf.dll = $(LINKLIBS) $(APPLINKLIBS) ;
-    Main npmupdf.dll : npwin.c moz_winres.rc moz_main.c ;
-    LinkLibraries npmupdf.dll : $(FITZLIBS) ;
+	SubDir TOP apps mozilla ;
+	SUFEXE on npmupdf.dll = ;
+	LINKFLAGS on npmupdf.dll = $(LINKFLAGS) -shared -Wl,--kill-at ;
+	LINKLIBS on npmupdf.dll = $(LINKLIBS) $(APPLINKLIBS) ;
+	Main npmupdf.dll : npwin.c moz_winres.rc moz_main.c ;
+	LinkLibraries npmupdf.dll : $(FITZLIBS) ;
 }
-
