@@ -142,11 +142,8 @@ pdf_runxobject(pdf_csi *csi, pdf_xref *xref, fz_obj *resources, pdf_xobject *xob
 	fz_error error;
 v v v v v v v
 *************
-v v v v v v v
-*************
 	fz_node *transform;
 	fz_stream *file;
-^ ^ ^ ^ ^ ^ ^
 ^ ^ ^ ^ ^ ^ ^
 	pdf_gstate *gstate;
 	fz_stream *file;
@@ -173,10 +170,6 @@ v v v v v v v
 	{
 v v v v v v v
 		/* The xobject's contents ought to be blended properly,
-v v v v v v v
-		but for now, just do over and hope for something */
-		// TODO: push, pop and blend buffers
-*************
 		but for now, just do over and hope for something */
 		// TODO: push, pop and blend buffers
 *************
@@ -197,7 +190,6 @@ v v v v v v v
 		fz_insertnodelast(gstate->head, blend);
 		gstate->head = blend;
 		*/
-^ ^ ^ ^ ^ ^ ^
 ^ ^ ^ ^ ^ ^ ^
 	}
 
@@ -380,10 +372,9 @@ v v v v v v v
 *************
 			/* The content stream ought to be blended properly,
 			but for now, just do over and hope for something
+
+			error = fz_newblendnode(&blend, gstate->blendmode, 0, 0);
 			*/
-v v v v v v v
-			// TODO: push, pop and blend buffers
-*************
 			error = fz_newovernode(&blend);
 			if (error)
 				return fz_rethrow(error, "cannot create blend node");
@@ -417,7 +408,6 @@ v v v v v v v
 			fz_insertnodelast(gstate->head, blend);
 			gstate->head = blend;
 			*/
-^ ^ ^ ^ ^ ^ ^
 ^ ^ ^ ^ ^ ^ ^
 		}
 
