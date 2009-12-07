@@ -66,15 +66,10 @@ pdf_loadxobject(pdf_xobject **formp, pdf_xref *xref, fz_obj *dict)
 	form->resources = fz_dictgets(dict, "Resources");
 v v v v v v v
 	if (form->resources)
-		fz_keepobj(form->resources);
-*************
-v v v v v v v
-	if (form->resources)
 		form->resources = fz_keepobj(form->resources);
 *************
 	if (form->resources)
 		fz_keepobj(form->resources);
-^ ^ ^ ^ ^ ^ ^
 ^ ^ ^ ^ ^ ^ ^
 
 	error = pdf_loadstream(&form->contents, xref, fz_tonum(dict), fz_togen(dict));
@@ -110,15 +105,8 @@ v v v v v v v
 		if (xobj->contents)
 			fz_dropbuffer(xobj->contents);
 *************
-v v v v v v v
-		if (xobj->resources)
-			fz_dropobj(xobj->resources);
-		if (xobj->contents)
-			fz_dropbuffer(xobj->contents);
-*************
 		if (xobj->resources) fz_dropobj(xobj->resources);
 		if (xobj->contents) fz_dropbuffer(xobj->contents);
-^ ^ ^ ^ ^ ^ ^
 ^ ^ ^ ^ ^ ^ ^
 		fz_free(xobj);
 	}
