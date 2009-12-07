@@ -226,27 +226,10 @@ v v v v v v v
 	URWChanceryL-MediItal.cff
 	;
 *************
-	Dingbats.ttf
-	StandardSymL.ttf
-	URWChanceryL-MediItal.ttf
-	;
-*************
-    Dingbats.ttf
-    StandardSymL.ttf
-    URWChanceryL-MediItal.ttf
-    ;
-*************
-v v v v v v v
 	Dingbats.cff
 	StandardSymL.cff
 	URWChanceryL-MediItal.cff
 	;
-*************
-	Dingbats.cff
-	StandardSymL.cff
-	URWChanceryL-MediItal.cff
-	;
-^ ^ ^ ^ ^ ^ ^
 ^ ^ ^ ^ ^ ^ ^
 
 GenFile font_mono.c : fontdump
@@ -257,31 +240,11 @@ v v v v v v v
 	NimbusMonL-BoldObli.cff
 	;
 *************
-	NimbusMonL-Regu.ttf
-	NimbusMonL-ReguObli.ttf
-	NimbusMonL-Bold.ttf
-	NimbusMonL-BoldObli.ttf
-	;
-*************
-    NimbusMonL-Regu.ttf
-    NimbusMonL-ReguObli.ttf
-    NimbusMonL-Bold.ttf
-    NimbusMonL-BoldObli.ttf
-    ;
-*************
-v v v v v v v
 	NimbusMonL-Regu.cff
 	NimbusMonL-ReguObli.cff
 	NimbusMonL-Bold.cff
 	NimbusMonL-BoldObli.cff
 	;
-*************
-	NimbusMonL-Regu.cff
-	NimbusMonL-ReguObli.cff
-	NimbusMonL-Bold.cff
-	NimbusMonL-BoldObli.cff
-	;
-^ ^ ^ ^ ^ ^ ^
 ^ ^ ^ ^ ^ ^ ^
 
 GenFile font_serif.c : fontdump
@@ -292,31 +255,11 @@ v v v v v v v
 	NimbusRomNo9L-MediItal.cff
 	;
 *************
-	NimbusRomNo9L-Regu.ttf
-	NimbusRomNo9L-ReguItal.ttf
-	NimbusRomNo9L-Medi.ttf
-	NimbusRomNo9L-MediItal.ttf
-	;
-*************
-    NimbusRomNo9L-Regu.ttf
-    NimbusRomNo9L-ReguItal.ttf
-    NimbusRomNo9L-Medi.ttf
-    NimbusRomNo9L-MediItal.ttf
-    ;
-*************
-v v v v v v v
 	NimbusRomNo9L-Regu.cff
 	NimbusRomNo9L-ReguItal.cff
 	NimbusRomNo9L-Medi.cff
 	NimbusRomNo9L-MediItal.cff
 	;
-*************
-	NimbusRomNo9L-Regu.cff
-	NimbusRomNo9L-ReguItal.cff
-	NimbusRomNo9L-Medi.cff
-	NimbusRomNo9L-MediItal.cff
-	;
-^ ^ ^ ^ ^ ^ ^
 ^ ^ ^ ^ ^ ^ ^
 
 GenFile font_sans.c : fontdump
@@ -327,31 +270,11 @@ v v v v v v v
 	NimbusSanL-ReguItal.cff
 	;
 *************
-	NimbusSanL-Bold.ttf
-	NimbusSanL-BoldItal.ttf
-	NimbusSanL-Regu.ttf
-	NimbusSanL-ReguItal.ttf
-	;
-*************
-    NimbusSanL-Bold.ttf
-    NimbusSanL-BoldItal.ttf
-    NimbusSanL-Regu.ttf
-    NimbusSanL-ReguItal.ttf
-    ;
-*************
-v v v v v v v
 	NimbusSanL-Bold.cff
 	NimbusSanL-BoldItal.cff
 	NimbusSanL-Regu.cff
 	NimbusSanL-ReguItal.cff
 	;
-*************
-	NimbusSanL-Bold.cff
-	NimbusSanL-BoldItal.cff
-	NimbusSanL-Regu.cff
-	NimbusSanL-ReguItal.cff
-	;
-^ ^ ^ ^ ^ ^ ^
 ^ ^ ^ ^ ^ ^ ^
 
 Library libfonts :
