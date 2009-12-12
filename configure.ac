@@ -37,10 +37,6 @@ mupdf.pc
 fitz/Makefile
 fitzdraw/Makefile
 cmaps/Makefile
-cmaps/chinese_s/Makefile
-cmaps/chinese_t/Makefile
-cmaps/japanese/Makefile
-cmaps/korean/Makefile
 fonts/Makefile
 mupdf/Makefile
 ])

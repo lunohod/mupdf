@@ -7,7 +7,7 @@ jbig2dec_sources = filt_jbig2d.c
 endif
 
 if HAVE_OPENJPEG
-openjpeg_sources = filt_jpxd_opj.c
+openjpeg_sources = filt_jpxd.c
 endif
 
 fitz_includedir = $(includedir)
@@ -50,32 +50,20 @@ libfitz_la_SOURCES =	\
 	stm_misc.c	\
 	\
 	filt_pipeline.c	\
-	filt_copy.c	\
+	filt_basic.c	\
 	filt_arc4.c	\
 	filt_aesd.c	\
-	filt_null.c	\
 	\
-	filt_a85d.c	\
-	filt_a85e.c	\
-	filt_ahxd.c	\
-	filt_ahxe.c	\
 	filt_dctd.c	\
-	filt_dcte.c	\
 	filt_faxd.c	\
 	filt_faxdtab.c	\
-	filt_faxe.c	\
-	filt_faxetab.c	\
 	filt_flate.c	\
 	filt_lzwd.c	\
-	filt_lzwe.c	\
 	filt_predict.c	\
-	filt_rld.c	\
-	filt_rle.c	\
 	\
 	node_toxml.c	\
 	node_misc1.c	\
 	node_misc2.c	\
-	node_optimize.c	\
 	node_path.c	\
 	node_text.c	\
 	node_tree.c	\

@@ -1,8 +1,4 @@
 SUBDIRS = \
-cmaps/chinese_s \
-cmaps/chinese_t \
-cmaps/japanese \
-cmaps/korean \
 cmaps \
 fonts \
 fitz \

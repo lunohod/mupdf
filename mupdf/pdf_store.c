@@ -290,26 +290,11 @@ pdf_removeitem(pdf_store *store, pdf_itemkind kind, fz_obj *key)
 
 		item = fz_hashfind(store->hash, &refkey);
 		if (!item)
-v v v v v v v
 			return;
 		fz_hashremove(store->hash, &refkey);
 
 		pdf_logrsrc("remove item %s (%d %d R) ptr=%p\n", kindstr(kind), fz_tonum(key), fz_togen(key), item->val);
 
-*************
-v v v v v v v
-			return fz_throw("cannot remove non-existent item from store");
-		error = fz_hashremove(store->hash, &refkey);
-		if (error)
-			return fz_rethrow(error, "cannot remove item from store");
-
-		pdf_logrsrc("remove item %s (%d %d R) ptr=%p\n", kindstr(kind), fz_tonum(key), fz_togen(key), item->val);
-
-*************
-			return;
-		fz_hashremove(store->hash, &refkey);
-^ ^ ^ ^ ^ ^ ^
-^ ^ ^ ^ ^ ^ ^
 		dropitem(kind, item->val);
 		fz_dropobj(item->key);
 		fz_free(item);
