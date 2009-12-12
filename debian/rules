@@ -46,7 +46,7 @@ binary-arch: install
 
 	dh_install -s --sourcedir=debian/tmp
 	dh_link -s
-	dh_strip -s --dbg-package=libmupdf1-dbg
+	dh_strip -s --dbg-package=libmupdf2-dbg
 	dh_compress -s
 	dh_fixperms -s
 	dh_makeshlibs -s

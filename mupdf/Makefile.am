@@ -22,7 +22,7 @@ libmupdf_la_LIBADD =	\
 	@Z_LIBS@ \
 	-lm
 
-libmupdf_la_LDFLAGS = -no-undefined -version-info 1:0:0 -Wl,--as-needed
+libmupdf_la_LDFLAGS = -no-undefined -version-info 2:0:0 -Wl,--as-needed
 libmupdf_la_SOURCES =	\
 	pdf_crypt.c	\
 	pdf_debug.c	\

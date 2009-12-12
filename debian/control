@@ -7,12 +7,12 @@ XCS-Cross-Build-Depends: libfreetype6-dev, zlib1g-dev | libz-dev | libz1-dev, li
 Priority: optional
 Standards-Version: 3.8.0
 
-Package: libmupdf1
+Package: libmupdf2
 Priority: optional
 Architecture: any
 Depends: ${shlibs:Depends}
-Conflicts: libmupdf
-Replaces: libmupdf
+Conflicts: libmupdf1
+Replaces: libmupdf1
 Description: MuPDF library
  MuPDF is a lightweight PDF viewer and toolkit written in portable C.
  .
@@ -21,16 +21,16 @@ Description: MuPDF library
 Package: libmupdf-dev
 Priority: optional
 Architecture: any
-Depends: libmupdf1 (= ${binary:Version}), ${shlibs:Depends}
+Depends: libmupdf2 (= ${binary:Version}), ${shlibs:Depends}
 Description: MuPDF library -- development
  MuPDF is a lightweight PDF viewer and toolkit written in portable C.
  .
  This package contains header files and symlinks necessary to link with library.
 
-Package: libmupdf1-dbg
+Package: libmupdf2-dbg
 Priority: extra
 Architecture: any
-Depends: libmupdf1 (= ${binary:Version})
+Depends: libmupdf2 (= ${binary:Version})
 Description: MuPDF library -- debugging symbols
  MuPDF is a lightweight PDF viewer and toolkit written in portable C.
  .
