@@ -6,10 +6,6 @@ if HAVE_JBIG2DEC
 jbig2dec_sources = filt_jbig2d.c
 endif
 
-if HAVE_JASPER
-jasper_sources = filt_jpxd_jas.c
-endif
-
 if HAVE_OPENJPEG
 openjpeg_sources = filt_jpxd_opj.c
 endif
@@ -24,7 +20,6 @@ fitz_include_HEADERS =	\
 
 libfitz_la_SOURCES =	\
 	$(jbig2dec_sources)	\
-	$(jasper_sources)	\
 	$(openjpeg_sources)	\
 	base_cpudep.c	\
 	base_error.c	\

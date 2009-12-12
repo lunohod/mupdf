@@ -5,7 +5,7 @@ else
 AM_CFLAGS = -DNOCJK
 endif
 
-INCLUDES = @FREETYPE_CFLAGS@ @JASPER_CFLAGS@ @JBIG2DEC_CFLAGS@ @OPENJPEG_CFLAGS@ -I$(top_srcdir)/fitz
+INCLUDES = @FREETYPE_CFLAGS@ @JBIG2DEC_CFLAGS@ @OPENJPEG_CFLAGS@ -I$(top_srcdir)/fitz
 
 mupdf_includedir = $(includedir)
 mupdf_include_HEADERS = mupdf.h
@@ -16,7 +16,6 @@ libmupdf_la_LIBADD =	\
 	$(top_builddir)/fonts/libfonts.la	\
 	$(top_builddir)/cmaps/libcmaps.la	\
 	@FREETYPE_LIBS@	\
-	@JASPER_LIBS@ \
 	@JBIG2DEC_LIBS@ \
 	@OPENJPEG_LIBS@ \
 	@JPEG_LIBS@ \
