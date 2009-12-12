@@ -1,3 +1,9 @@
+mupdf (0.4-20091212-2) zelazny; urgency=low
+
+  * Fix packaging
+
+ -- Alexander Kerner <lunohod@openinkpot.org>  Sat, 12 Dec 2009 20:55:37 +0100
+
 mupdf (0.4-20091212-1) zelazny; urgency=low
 
   * Merge with upstream
