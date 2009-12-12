@@ -1,8 +1,8 @@
-mupdf (0.4-20091101-8) asimov; urgency=low
+mupdf (0.4-20091212-1) zelazny; urgency=low
 
-  * Add "Conflicts: libmupdf" to debian/control
+  * Merge with upstream
 
- -- Alexander Kerner <lunohod@openinkpot.org>  Sat, 14 Nov 2009 00:07:10 +0100
+ -- Alexander Kerner <lunohod@openinkpot.org>  Sat, 12 Dec 2009 20:28:36 +0100
 
 mupdf (0.4-20091101-7) asimov; urgency=low
 
