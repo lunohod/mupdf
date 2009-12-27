@@ -1,9 +1,12 @@
 typedef struct fz_renderer_s fz_renderer;
+typedef struct fz_lazytile_s fz_lazytile;
 
 #define FZ_BYTE unsigned char
 
 #define FZ_PSRC \
 	unsigned char *src, int srcw, int srch
+#define FZ_LPSRC \
+	fz_lazytile *src, int srcw, int srch
 #define FZ_PDST \
 	unsigned char *dst0, int dstw
 #define FZ_PCTM \
@@ -11,6 +14,15 @@ typedef struct fz_renderer_s fz_renderer;
 
 typedef struct fz_glyph_s fz_glyph;
 typedef struct fz_glyphcache_s fz_glyphcache;
+
+struct fz_lazytile_s
+{
+	fz_pixmap *tile;
+	int dx, dy;
+	int tileheight;
+	fz_image *image;
+	fz_colorspace *target_cs;
+};
 
 fz_error fz_renderftglyph(fz_glyph *glyph, fz_font *font, int cid, fz_matrix trm);
 fz_error fz_rendert3glyph(fz_glyph *glyph, fz_font *font, int cid, fz_matrix trm);
@@ -93,6 +105,13 @@ extern void (*fz_img_4c4)(FZ_PSRC, FZ_PDST, FZ_PCTM);
 extern void (*fz_img_1o1)(FZ_PSRC, FZ_PDST, FZ_PCTM);
 extern void (*fz_img_4o4)(FZ_PSRC, FZ_PDST, FZ_PCTM);
 extern void (*fz_img_w4i1o4)(FZ_BYTE*,FZ_PSRC,FZ_PDST,FZ_PCTM);
+
+extern void (*fz_img_ncn_lazy)(FZ_LPSRC, int sn, FZ_PDST, FZ_PCTM);
+extern void (*fz_img_1c1_lazy)(FZ_LPSRC, FZ_PDST, FZ_PCTM);
+extern void (*fz_img_4c4_lazy)(FZ_LPSRC, FZ_PDST, FZ_PCTM);
+extern void (*fz_img_1o1_lazy)(FZ_LPSRC, FZ_PDST, FZ_PCTM);
+extern void (*fz_img_4o4_lazy)(FZ_LPSRC, FZ_PDST, FZ_PCTM);
+extern void (*fz_img_w4i1o4_lazy)(FZ_BYTE*,FZ_LPSRC,FZ_PDST,FZ_PCTM);
 
 extern void (*fz_decodetile)(fz_pixmap *pix, int skip, float *decode);
 extern void (*fz_loadtile1)(FZ_BYTE*, int sw, FZ_BYTE*, int dw, int w, int h, int pad);

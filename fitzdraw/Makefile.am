@@ -10,6 +10,7 @@ libfitzdraw_la_SOURCES =	\
 	porterduff.c	\
 	meshdraw.c	\
 	imagedraw.c	\
+	imagedraw_lazy.c	\
 	imageunpack.c	\
 	imagescale.c	\
 	pathscan.c	\

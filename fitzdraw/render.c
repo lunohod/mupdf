@@ -385,7 +385,7 @@ calcimagescale(fz_matrix ctm, int w, int h, int *odx, int *ody)
 }
 
 static fz_error
-renderimage(fz_renderer *gc, fz_imagenode *node, fz_matrix ctm)
+renderimage_orig(fz_renderer *gc, fz_imagenode *node, fz_matrix ctm)
 {
 	fz_error error;
 	fz_image *image = node->image;
@@ -561,6 +561,129 @@ cleanup1:
 cleanup:
 	fz_droppixmap(tile);
 	return error;
+}
+
+static fz_error
+renderimage(fz_renderer *gc, fz_imagenode *node, fz_matrix ctm)
+{
+	fz_error error;
+	fz_image *image = node->image;
+	fz_irect bbox;
+	fz_irect clip;
+	int dx, dy;
+	fz_pixmap *tile;
+	fz_pixmap *temp;
+	fz_matrix imgmat;
+	fz_matrix invmat;
+	int fa, fb, fc, fd;
+	int u0, v0;
+	int x0, y0;
+	int w, h;
+	int tileheight;
+
+	DEBUG("image %dx%d %d+%d %s\n{\n", image->w, image->h, image->n, image->a, image->cs?image->cs->name:"(nil)");
+
+	bbox = fz_roundrect(fz_boundnode((fz_node*)node, ctm));
+	clip = fz_intersectirects(gc->clip, bbox);
+
+	if (fz_isemptyrect(clip))
+		return fz_okay;
+	if (image->w == 0 || image->h == 0)
+		return fz_okay;
+
+	calcimagescale(ctm, image->w, image->h, &dx, &dy);
+
+	/* try to fit tile into a typical L2 cachce */
+	tileheight = 512 * 1024 / (image->w * (gc->model->n + image->a));
+	/* tileheight must be an even multiple of dy, except for last band */
+	tileheight = (tileheight + dy - 1) / dy * dy;
+
+	fz_lazytile lazytile;
+	lazytile.tile = NULL;
+	lazytile.dx = dx;
+	lazytile.dy = dy;
+	lazytile.tileheight = tileheight;
+	lazytile.image = image;
+	lazytile.target_cs = gc->model;
+
+	int ow = (image->w + dx - 1) / dx;
+	int oh = (image->h + dy - 1) / dy;
+
+	imgmat.a = 1.0 / ow;
+	imgmat.b = 0.0;
+	imgmat.c = 0.0;
+	imgmat.d = -1.0 / oh;
+	imgmat.e = 0.0;
+	imgmat.f = 1.0;
+	invmat = fz_invertmatrix(fz_concat(imgmat, ctm));
+
+	invmat.e -= 0.5;
+	invmat.f -= 0.5;
+
+	w = clip.x1 - clip.x0;
+	h = clip.y1 - clip.y0;
+	x0 = clip.x0;
+	y0 = clip.y0;
+	u0 = (invmat.a * (x0+0.5) + invmat.c * (y0+0.5) + invmat.e) * 65536;
+	v0 = (invmat.b * (x0+0.5) + invmat.d * (y0+0.5) + invmat.f) * 65536;
+	fa = invmat.a * 65536;
+	fb = invmat.b * 65536;
+	fc = invmat.c * 65536;
+	fd = invmat.d * 65536;
+
+	// rotated image, call original rendering function
+	if (fb || fc)
+		return renderimage_orig(gc, node, ctm);
+
+#define LPSRC &lazytile, ow, oh
+#define PDST(p) p->samples + ((y0-p->y) * p->w + (x0-p->x)) * p->n, p->w * p->n
+#define PCTM u0, v0, fa, fb, fc, fd, w, h
+
+	switch (gc->flag)
+	{
+	case FNONE:
+		{
+			DEBUG("  fnone %d x %d\n", w, h);
+			if (image->cs)
+				error = fz_newpixmapwithrect(&gc->dest, clip, gc->model->n + 1);
+			else
+				error = fz_newpixmapwithrect(&gc->dest, clip, 1);
+			if (error)
+				goto cleanup;
+
+			if (image->cs)
+				fz_img_4c4_lazy(LPSRC, PDST(gc->dest), PCTM);
+			else
+				fz_img_1c1_lazy(LPSRC, PDST(gc->dest), PCTM);
+		}
+		break;
+
+	case FOVER:
+		{
+			DEBUG("  fover %d x %d\n", w, h);
+			if (image->cs)
+				fz_img_4o4_lazy(LPSRC, PDST(gc->over), PCTM);
+			else
+				fz_img_1o1_lazy(LPSRC, PDST(gc->over), PCTM);
+		}
+		break;
+
+	case FOVER | FRGB:
+		DEBUG("  fover+rgb %d x %d\n", w, h);
+		fz_img_w4i1o4_lazy(gc->argb, LPSRC, PDST(gc->over), PCTM);
+		break;
+
+	default:
+		assert(!"impossible flag in image span function");
+	}
+
+	DEBUG("}\n");
+
+cleanup:
+	if(lazytile.tile)
+		fz_droppixmap(lazytile.tile);
+
+	return fz_okay;
 }
 
 /*
