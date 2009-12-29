@@ -1,3 +1,9 @@
+mupdf (0.4-20091212-3) zelazny; urgency=low
+
+  * Implement lazy image rendering
+
+ -- Alexander Kerner <lunohod@openinkpot.org>  Tue, 29 Dec 2009 23:28:20 +0100
+
 mupdf (0.4-20091212-2) zelazny; urgency=low
 
   * Fix packaging
