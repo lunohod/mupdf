@@ -1,7 +1,10 @@
 #include "fitz.h"
 #include "mupdf.h"
 
-pdf_csi *
+static fz_error
+pdf_runcsibuffer(pdf_csi *csi, pdf_xref *xref, fz_obj *rdb, fz_buffer *contents);
+
+static pdf_csi *
 pdf_newcsi(fz_device *dev, int maskonly, fz_matrix ctm)
 {
 	pdf_csi *csi;
@@ -113,8 +116,8 @@ grestore(pdf_csi *csi)
 	csi->gtop --;
 }
 
-void
-pdf_dropcsi(pdf_csi *csi)
+static void
+pdf_freecsi(pdf_csi *csi)
 {
 	while (csi->gtop)
 		grestore(csi);
@@ -151,7 +154,6 @@ v v v v v v v
 ^ ^ ^ ^ ^ ^ ^
 ^ ^ ^ ^ ^ ^ ^
 	pdf_gstate *gstate;
-	fz_stream *file;
 
 	gsave(csi);
 
@@ -219,15 +221,9 @@ v v v v v v v
 		resources = xobj->resources;
 
 	xobj->contents->rp = xobj->contents->bp;
-	file = fz_openrbuffer(xobj->contents);
-
-	error = pdf_runcsi(csi, xref, resources, file);
+	error = pdf_runcsibuffer(csi, xref, resources, xobj->contents);
 	if (error)
-	{
-		fz_dropstream(file);
 		return fz_rethrow(error, "cannot interpret XObject stream");
-	}
-	fz_dropstream(file);
 
 	grestore(csi);
 
@@ -1284,11 +1280,10 @@ syntaxerror:
 	return fz_throw("syntaxerror near '%s'", buf);
 }
 
-fz_error
-pdf_runcsi(pdf_csi *csi, pdf_xref *xref, fz_obj *rdb, fz_stream *file)
+static fz_error
+pdf_runcsifile(pdf_csi *csi, pdf_xref *xref, fz_obj *rdb, fz_stream *file, char *buf, int buflen)
 {
 	fz_error error;
-	char buf[65536]; // XXX: EEP! way to eat up the stack!
 	pdf_token_e tok;
 	int len;
 	fz_obj *obj;
@@ -1298,7 +1293,7 @@ pdf_runcsi(pdf_csi *csi, pdf_xref *xref, fz_obj *rdb, fz_stream *file)
 		if (csi->top == 31)
 			return fz_throw("stack overflow");
 
-		error = pdf_lex(&tok, file, buf, sizeof buf, &len);
+		error = pdf_lex(&tok, file, buf, buflen, &len);
 		if (error)
 			return fz_rethrow(error, "lexical error in content stream");
 
@@ -1344,7 +1339,7 @@ pdf_runcsi(pdf_csi *csi, pdf_xref *xref, fz_obj *rdb, fz_stream *file)
 			break;
 
 		case PDF_TODICT:
-			error = pdf_parsedict(&csi->stack[csi->top], xref, file, buf, sizeof buf);
+			error = pdf_parsedict(&csi->stack[csi->top], xref, file, buf, buflen);
 			if (error)
 				return fz_rethrow(error, "cannot parse dictionary");
 			csi->top ++;
@@ -1391,7 +1386,7 @@ pdf_runcsi(pdf_csi *csi, pdf_xref *xref, fz_obj *rdb, fz_stream *file)
 				fz_obj *obj;
 				int ch;
 
-				error = pdf_parsedict(&obj, xref, file, buf, sizeof buf);
+				error = pdf_parsedict(&obj, xref, file, buf, buflen);
 				if (error)
 					return fz_rethrow(error, "cannot parse inline image dictionary");
 
@@ -1423,4 +1418,29 @@ pdf_runcsi(pdf_csi *csi, pdf_xref *xref, fz_obj *rdb, fz_stream *file)
 			return fz_throw("syntaxerror in content stream");
 		}
 	}
+}
+
+static fz_error
+pdf_runcsibuffer(pdf_csi *csi, pdf_xref *xref, fz_obj *rdb, fz_buffer *contents)
+{
+	char *buf = fz_malloc(65536);
+	fz_stream *file = fz_openrbuffer(contents);
+	fz_error error = pdf_runcsifile(csi, xref, rdb, file, buf, 65536);
+	fz_dropstream(file);
+	fz_free(buf);
+	if (error)
+		return fz_rethrow(error, "cannot parse content stream");
+	return fz_okay;
+}
+
+fz_error
+pdf_runcontentstream(fz_device *dev, fz_matrix ctm, int maskonly,
+	pdf_xref *xref, fz_obj *resources, fz_buffer *contents)
+{
+	pdf_csi *csi = pdf_newcsi(dev, maskonly, ctm);
+	fz_error error = pdf_runcsibuffer(csi, xref, resources, contents);
+	pdf_freecsi(csi);
+	if (error)
+		return fz_rethrow(error, "cannot parse content stream");
+	return fz_okay;
 }
