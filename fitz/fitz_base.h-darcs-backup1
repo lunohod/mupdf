@@ -299,36 +299,23 @@ conversions and rescaling.
 */
 
 typedef struct fz_pixmap_s fz_pixmap;
-typedef struct fz_colorspace_s fz_colorspace;
-
-extern fz_colorspace *pdf_devicegray;
-extern fz_colorspace *pdf_devicergb;
-extern fz_colorspace *pdf_devicecmyk;
-extern fz_colorspace *pdf_devicelab;
-extern fz_colorspace *pdf_devicepattern;
+typedef unsigned char fz_sample;
 
 struct fz_pixmap_s
 {
 	int x, y, w, h, n;
-	fz_colorspace *colorspace;
-	unsigned char *samples;
+	fz_sample *samples;
 };
 
-fz_pixmap * fz_newpixmapwithrect(fz_colorspace *, fz_irect bbox);
-fz_pixmap * fz_newpixmap(fz_colorspace *, int x, int y, int w, int h);
+fz_pixmap * fz_newpixmapwithrect(fz_irect bbox, int n);
+fz_pixmap * fz_newpixmap(int x, int y, int w, int h, int n);
+fz_pixmap * fz_newpixmapcopy(fz_pixmap *old);
 
 void fz_debugpixmap(fz_pixmap *map, char *prefix);
 void fz_clearpixmap(fz_pixmap *map, unsigned char value);
 void fz_freepixmap(fz_pixmap *map);
 
 fz_pixmap * fz_scalepixmap(fz_pixmap *src, int xdenom, int ydenom);
-v v v v v v v
-*************
-
-/* needed for tiled rendering */
-fz_pixmap * fz_newscaledpixmap(int w, int h, int n, int xdenom, int ydenom);
-void fz_scalepixmaptile(fz_pixmap *dstp, int xoffs, int yoffs, fz_pixmap *tile, int xdenom, int ydenom);
-*************
 
 /* needed for tiled rendering */
 v v v v v v v
@@ -342,5 +329,4 @@ fz_error fz_scalepixmaptile(fz_pixmap *dstp, int xoffs, int yoffs,
 *************
 fz_pixmap * fz_newscaledpixmap(int w, int h, int n, int xdenom, int ydenom);
 void fz_scalepixmaptile(fz_pixmap *dstp, int xoffs, int yoffs, fz_pixmap *tile, int xdenom, int ydenom);
-^ ^ ^ ^ ^ ^ ^
 ^ ^ ^ ^ ^ ^ ^
