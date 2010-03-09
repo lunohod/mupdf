@@ -22,10 +22,6 @@ LinkLibraries pdfdraw : libpdftool $(FITZLIBS) ;
 v v v v v v v
 # Main pdfextract : pdfextract.c ;
 # LinkLibraries pdfextract : libpdftool $(FITZLIBS) ;
-*************
-v v v v v v v
-# Main pdfextract : pdfextract.c ;
-# LinkLibraries pdfextract : libpdftool $(FITZLIBS) ;
 
 SubDir TOP apps common ;
 Library libpdftool : pdftool.c ;
@@ -50,7 +46,6 @@ v v v v v v v
 
 SubDir TOP apps common ;
 Library libpdftool : pdftool.c ;
-^ ^ ^ ^ ^ ^ ^
 
 # SubDir TOP apps common ;
 # Library libpdfapp : pdfapp.c ;
@@ -80,11 +75,6 @@ LinkLibraries pdfextract : libpdftool $(FITZLIBS) ;
 if $(BUILD_WINAPP)
 {
 v v v v v v v
-	Main mupdf : win_main.c win_res.rc ;
-	LinkLibraries mupdf : libpdfapp $(FITZLIBS) ;
-	LINKLIBS on mupdf$(SUFEXE) = $(LINKLIBS) $(APPLINKLIBS) ;
-*************
-v v v v v v v
 	SubDir TOP apps windows ;
 	Main mupdf : winmain.c winres.rc ;
 	LinkLibraries mupdf : libpdfapp $(FITZLIBS) ;
@@ -94,16 +84,10 @@ v v v v v v v
     LinkLibraries mupdf : libpdfapp $(FITZLIBS) ;
     LINKLIBS on mupdf$(SUFEXE) = $(LINKLIBS) $(APPLINKLIBS) ;
 ^ ^ ^ ^ ^ ^ ^
-^ ^ ^ ^ ^ ^ ^
 }
 
 if $(BUILD_X11APP)
 {
-v v v v v v v
-	Main mupdf : x11_main.c x11_image.c ;
-	LinkLibraries mupdf : libpdfapp $(FITZLIBS) ;
-	LINKLIBS on mupdf$(SUFEXE) = $(LINKLIBS) $(APPLINKLIBS) ;
-*************
 v v v v v v v
 	 SubDir TOP apps unix ;
 	 Main mupdf : x11pdf.c ximage.c ;
@@ -124,7 +108,6 @@ v v v v v v v
 #	 Main mupdf : x11pdf.c ximage.c ;
 #	 LinkLibraries mupdf : libpdfapp $(FITZLIBS) ;
 #	 LINKLIBS on mupdf$(SUFEXE) = $(LINKLIBS) $(APPLINKLIBS) ;
-^ ^ ^ ^ ^ ^ ^
 ^ ^ ^ ^ ^ ^ ^
 ^ ^ ^ ^ ^ ^ ^
 }
