@@ -162,10 +162,12 @@ v v v v v v v
 ^ ^ ^ ^ ^ ^ ^
 	pdf_gstate *gstate;
 	fz_matrix oldtopctm;
+	int oldtop;
 
 	pdf_gsave(csi);
 
 	gstate = csi->gstate + csi->gtop;
+	oldtop = csi->gtop;
 
 	gstate->stroke.parentalpha = gstate->stroke.alpha;
 	gstate->fill.parentalpha = gstate->fill.alpha;
@@ -237,6 +239,9 @@ v v v v v v v
 		return fz_rethrow(error, "cannot interpret XObject stream");
 
 	csi->topctm = oldtopctm;
+
+	while (oldtop < csi->gtop)
+		pdf_grestore(csi);
 
 	pdf_grestore(csi);
 
