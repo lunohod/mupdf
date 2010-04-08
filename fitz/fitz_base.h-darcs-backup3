@@ -288,8 +288,6 @@ fz_irect fz_mergeirects(fz_irect a, fz_irect b);
 fz_point fz_transformpoint(fz_matrix m, fz_point p);
 fz_rect fz_transformaabb(fz_matrix m, fz_rect r);
 
-v v v v v v v
-*************
 /*
  *TODO: move this into draw module
  */
@@ -328,7 +326,6 @@ v v v v v v v
 *************
 
 v v v v v v v
-^ ^ ^ ^ ^ ^ ^
 #endif
 *************
 /* needed for tiled rendering */
