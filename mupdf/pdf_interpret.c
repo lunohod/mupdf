@@ -459,7 +459,6 @@ v v v v v v v
 				return fz_rethrow(error, "cannot load xobject");
 				}
 				*/
-				puts("we encountered a soft mask");
 			}
 		}
 
