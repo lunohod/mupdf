@@ -299,6 +299,7 @@ pdf_runextgstate(pdf_gstate *gstate, pdf_xref *xref, fz_obj *rdb, fz_obj *extgst
 			if (fz_isarray(val) && fz_arraylen(val) == 2)
 			{
 				fz_error error;
+				fz_obj *font = fz_arrayget(val, 0);
 
 				if (gstate->font)
 				{
@@ -306,9 +307,9 @@ pdf_runextgstate(pdf_gstate *gstate, pdf_xref *xref, fz_obj *rdb, fz_obj *extgst
 					gstate->font = nil;
 				}
 
-				error = pdf_loadfont(&gstate->font, xref, rdb, fz_arrayget(val, 0));
+				error = pdf_loadfont(&gstate->font, xref, rdb, font);
 				if (error)
-					return fz_rethrow(error, "cannot load font");
+					return fz_rethrow(error, "cannot load font (%d %d R)", fz_tonum(font), fz_togen(font));
 				if (!gstate->font)
 					return fz_throw("cannot find font in store");
 				gstate->size = fz_toreal(fz_arrayget(val, 1));
@@ -450,14 +451,14 @@ v v v v v v v
 				{
 				error = pdf_loadxobject(&xobj, xref, g);
 				if (error)
-				return fz_rethrow(error, "cannot load xobject");
+				return fz_rethrow(error, "cannot load xobject (%d %d R)", fz_tonum(val), fz_togen(val));
 				}
 
 				else if (!strcmp(fz_toname(subtype), "Image"))
 				{
 				error = pdf_loadimage(&img, xref, g);
 				if (error)
-				return fz_rethrow(error, "cannot load xobject");
+				return fz_rethrow(error, "cannot load xobject (%d %d R)", fz_tonum(val), fz_togen(val));
 				}
 				*/
 			}
@@ -576,7 +577,7 @@ pdf_runkeyword(pdf_csi *csi, fz_obj *rdb, char *buf)
 
 			error = pdf_runextgstate(gstate, csi->xref, rdb, obj);
 			if (error)
-				return fz_rethrow(error, "cannot set ExtGState");
+				return fz_rethrow(error, "cannot set ExtGState (%d %d R)", fz_tonum(obj), fz_togen(obj));
 		}
 
 		else if (!strcmp(buf, "re"))
@@ -671,7 +672,7 @@ Lsetcolorspace:
 
 					error = pdf_loadcolorspace(&cs, csi->xref, obj);
 					if (error)
-						return fz_rethrow(error, "cannot load colorspace");
+						return fz_rethrow(error, "cannot load colorspace (%d %d R)", fz_tonum(obj), fz_togen(obj));
 				}
 
 				pdf_setcolorspace(csi, what, cs);
@@ -744,7 +745,7 @@ Lsetcolor:
 					pdf_pattern *pat;
 					error = pdf_loadpattern(&pat, csi->xref, obj);
 					if (error)
-						return fz_rethrow(error, "cannot load pattern");
+						return fz_rethrow(error, "cannot load pattern (%d %d R)", fz_tonum(obj), fz_togen(obj));
 					pdf_setpattern(csi, what, pat, csi->top == 1 ? nil : v);
 					pdf_droppattern(pat);
 				}
@@ -754,7 +755,7 @@ Lsetcolor:
 					fz_shade *shd;
 					error = pdf_loadshade(&shd, csi->xref, obj);
 					if (error)
-						return fz_rethrow(error, "cannot load shading");
+						return fz_rethrow(error, "cannot load shading (%d %d R)", fz_tonum(obj), fz_togen(obj));
 					pdf_setshade(csi, what, shd);
 					fz_dropshade(shd);
 				}
@@ -866,7 +867,7 @@ Lsetcolor:
 
 			error = pdf_loadfont(&gstate->font, csi->xref, rdb, obj);
 			if (error)
-				return fz_rethrow(error, "cannot load font");
+				return fz_rethrow(error, "cannot load font (%d %d R)", fz_tonum(obj), fz_togen(obj));
 
 			gstate->size = fz_toreal(csi->stack[1]);
 			if (gstate->size < -1000.0)
@@ -983,7 +984,7 @@ Lsetcolor:
 
 				error = pdf_loadxobject(&xobj, csi->xref, obj);
 				if (error)
-					return fz_rethrow(error, "cannot load xobject");
+					return fz_rethrow(error, "cannot load xobject (%d %d R)", fz_tonum(obj), fz_togen(obj));
 
 				/* Inherit parent resources, in case this one was empty  XXX check where it's loaded */
 				if (!xobj->resources)
@@ -991,7 +992,7 @@ Lsetcolor:
 
 				error = pdf_runxobject(csi, rdb, xobj);
 				if (error)
-					return fz_rethrow(error, "cannot draw xobject");
+					return fz_rethrow(error, "cannot draw xobject (%d %d R)", fz_tonum(obj), fz_togen(obj));
 
 				pdf_dropxobject(xobj);
 			}
@@ -1001,7 +1002,7 @@ Lsetcolor:
 				pdf_image *img;
 				error = pdf_loadimage(&img, csi->xref, obj);
 				if (error)
-					return fz_rethrow(error, "cannot load image");
+					return fz_rethrow(error, "cannot load image (%d %d R)", fz_tonum(obj), fz_togen(obj));
 				pdf_showimage(csi, img);
 				pdf_dropimage(img);
 			}
@@ -1031,7 +1032,7 @@ Lsetcolor:
 
 			error = pdf_loadshade(&shd, csi->xref, obj);
 			if (error)
-				return fz_rethrow(error, "cannot load shading");
+				return fz_rethrow(error, "cannot load shading (%d %d R)", fz_tonum(obj), fz_togen(obj));
 			pdf_showshade(csi, shd);
 			fz_dropshade(shd);
 		}
