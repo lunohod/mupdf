@@ -754,7 +754,7 @@ Lsetcolor:
 					fz_shade *shd;
 					error = pdf_loadshade(&shd, csi->xref, obj);
 					if (error)
-						return fz_rethrow(error, "cannot load shade");
+						return fz_rethrow(error, "cannot load shading");
 					pdf_setshade(csi, what, shd);
 					fz_dropshade(shd);
 				}
@@ -1023,15 +1023,15 @@ Lsetcolor:
 
 			dict = fz_dictgets(rdb, "Shading");
 			if (!dict)
-				return fz_throw("cannot find Shading dictionary");
+				return fz_throw("cannot find shading dictionary");
 
 			obj = fz_dictget(dict, csi->stack[csi->top - 1]);
 			if (!obj)
-				return fz_throw("cannot find shade resource: %s", fz_toname(csi->stack[csi->top - 1]));
+				return fz_throw("cannot find shading resource: %s", fz_toname(csi->stack[csi->top - 1]));
 
 			error = pdf_loadshade(&shd, csi->xref, obj);
 			if (error)
-				return fz_rethrow(error, "cannot load shade");
+				return fz_rethrow(error, "cannot load shading");
 			pdf_showshade(csi, shd);
 			fz_dropshade(shd);
 		}
